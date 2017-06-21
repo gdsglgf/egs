@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.examples.mapper.MovieMapper">
+	<resultMap id="MovieResultMap" type="com.mybatis.examples.model.Movie">
+		<id property="movieId" column="mid" />
+		<result property="title" column="title" />
+		<result property="genres" column="genres" />
+	</resultMap>
+	
+	<insert id="createMovie" 
+		parameterType="com.mybatis.examples.model.Movie" 
+		flushCache="true">
+		INSERT INTO t_movie (mid, title, genres) 
+		VALUES (#{movieId}, #{title}, #{genres})
+	</insert>
+	
+	<select id="getMovieById" 
+		parameterType="int"
+		resultMap="MovieResultMap"
+		useCache="true">
+		SELECT * 
+		FROM t_movie 
+		WHERE mid = #{movieId}
+	</select>
+	
+	<select id="countAll"
+		resultType="int"
+		useCache="true">
+		SELECT count(*) FROM t_movie
+	</select>
+</mapper>
